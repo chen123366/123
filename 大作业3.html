@@ -1,10 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>红双喜乒乓球拍-首屏轮播图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    body {
+      height: 100vh;
+      overflow: hidden;
+    }
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .banner-list {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(100% * 4);
+      height: 100%;
+      transition: left 0.5s ease;
+    }
+    .banner-item {
+      float: left;
+      width: calc(100% / 4);
+      height: 100%;
+      position: relative;
+    }
+    .banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .banner-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2rem 4rem;
+      border-radius: 8px;
+    }
+    .banner-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .banner-desc {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    .banner-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.3s ease;
+    }
+    .banner-arrow:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .arrow-left {
+      left: 20px;
+    }
+    .arrow-right {
+      right: 20px;
+    }
+    .banner-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 3;
+    }
+    .indicator-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .indicator-dot.active {
+      background: #fff;
+      transform: scale(1.2);
+    }
+    @media (max-width: 768px) {
+      .banner-text {
+        padding: 1rem 2rem;
+      }
+      .banner-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .banner-desc {
+        font-size: 0.9rem;
+      }
+      .banner-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      .indicator-dot {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
+<div class="banner" id="banner">
+  <div class="banner-list" id="bannerList">
+    <!-- 轮播1：红双喜专业竞技球拍 -->
+    <div class="banner-item">
+      <img src="picture/ll.png" alt="红双喜专业竞技乒乓球拍" class="banner-img">
+      <div class="banner-text">
+        <h2 class="banner-title">红双喜 专业竞技球拍</h2>
+        <p class="banner-desc">赛事级工艺打造，控球精准发力强劲，助力赛场夺冠</p>
+      </div>
+    </div>
+    <!-- 轮播2：红双喜入门初学球拍 -->
+    <div class="banner-item">
+      <img src="picture/kk.webp" alt="红双喜入门初学乒乓球拍" class="banner-img">
+      <div class="banner-text">
+        <h2 class="banner-title">入门优选 初学专拍</h2>
+        <p class="banner-desc">手感轻盈易操控，专为新手设计，轻松开启乒乓之旅</p>
+      </div>
+    </div>
+    <!-- 轮播3：红双喜少儿专用球拍 -->
+    <div class="banner-item">
+      <img src="picture/hh.webp" alt="红双喜少儿专用乒乓球拍" class="banner-img">
+      <div class="banner-text">
+        <h2 class="banner-title">少儿专属 趣味启蒙</h2>
+        <p class="banner-desc">迷你尺寸轻量化，防滑手柄更贴合，守护孩子乒乓兴趣</p>
+      </div>
+    </div>
+    <!-- 轮播4：红双喜球拍套装 -->
+    <div class="banner-item">
+      <img src="picture/jj.jpg" alt="红双喜乒乓球拍套装" class="banner-img">
+      <div class="banner-text">
+        <h2 class="banner-title">经典套装 全家共享</h2>
+        <p class="banner-desc">拍球搭配一站式购齐，亲子互动、朋友对打皆适用</p>
+      </div>
+    </div>
+  </div>
+  <button class="banner-arrow arrow-left" id="arrowLeft">&lt;</button>
+  <button class="banner-arrow arrow-right" id="arrowRight">&gt;</button>
+  <div class="banner-indicator" id="indicator"></div>
+</div>
 
+<script>
+  const bannerList = document.getElementById('bannerList');
+  const arrowLeft = document.getElementById('arrowLeft');
+  const arrowRight = document.getElementById('arrowRight');
+  const indicator = document.getElementById('indicator');
+  const banner = document.getElementById('banner');
+  const itemCount = document.querySelectorAll('.banner-item').length;
+  let currentIndex = 0;
+  let autoPlayTimer = null;
+
+  function initIndicator() {
+    let indicatorHtml = '';
+    for (let i = 0; i < itemCount; i++) {
+      indicatorHtml += `<span class="indicator-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`;
+    }
+    indicator.innerHTML = indicatorHtml;
+    document.querySelectorAll('.indicator-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        const index = parseInt(dot.dataset.index);
+        if (index !== currentIndex) {
+          currentIndex = index;
+          switchBanner();
+        }
+      });
+    });
+  }
+
+  function switchBanner() {
+    bannerList.style.left = `-${currentIndex * 100}%`;
+    updateIndicator();
+  }
+
+  function updateIndicator() {
+    document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  }
+
+  function goLeft() {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = itemCount - 1;
+    }
+    switchBanner();
+  }
+
+  function goRight() {
+    currentIndex++;
+    if (currentIndex >= itemCount) {
+      currentIndex = 0;
+    }
+    switchBanner();
+  }
+
+  function startAutoPlay() {
+    clearInterval(autoPlayTimer);
+    autoPlayTimer = setInterval(goRight, 3000);
+  }
+
+  function stopAutoPlay() {
+    clearInterval(autoPlayTimer);
+  }
+
+  function bindEvent() {
+    arrowLeft.addEventListener('click', goLeft);
+    arrowRight.addEventListener('click', goRight);
+    banner.addEventListener('mouseenter', stopAutoPlay);
+    banner.addEventListener('mouseleave', startAutoPlay);
+  }
+
+  function init() {
+    initIndicator();
+    bindEvent();
+    startAutoPlay();
+  }
+
+  window.addEventListener('load', init);
+</script>
 </body>
 </html>
